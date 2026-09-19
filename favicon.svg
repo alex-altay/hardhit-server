@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <g id="h" fill="#fff">
+      <rect x="12" y="10" width="11" height="44"/>
+      <rect x="41" y="10" width="11" height="44"/>
+      <rect x="12" y="26.5" width="40" height="11"/>
+    </g>
+    <clipPath id="left"><polygon points="0,0 47,0 17,64 0,64"/></clipPath>
+    <clipPath id="right"><polygon points="47,0 64,0 64,64 17,64"/></clipPath>
+  </defs>
+  <rect width="64" height="64" rx="12" fill="#ff0000"/>
+  <use href="#h" clip-path="url(#left)" transform="translate(-1 2)"/>
+  <use href="#h" clip-path="url(#right)" transform="translate(1 -2)"/>
+  <line x1="17" y1="64" x2="47" y2="0" stroke="#ff0000" stroke-width="3"/>
+</svg>
