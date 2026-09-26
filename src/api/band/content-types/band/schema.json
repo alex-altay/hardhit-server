@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "bands",
+  "info": {
+    "singularName": "band",
+    "pluralName": "bands",
+    "displayName": "Band"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    },
+    "stories": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::story.story",
+      "mappedBy": "bands"
+    },
+    "photos_collections": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::photos-collection.photos-collection",
+      "mappedBy": "band"
+    },
+    "live_videos": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::live-video.live-video",
+      "mappedBy": "band"
+    }
+  }
+}

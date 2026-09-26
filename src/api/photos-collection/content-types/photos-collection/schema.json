@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "photos_collections",
+  "info": {
+    "singularName": "photos-collection",
+    "pluralName": "photos-collections",
+    "displayName": "PhotosCollection"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "photos": {
+      "type": "media",
+      "multiple": true,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "band": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::band.band",
+      "required": true,
+      "inversedBy": "photos_collections"
+    },
+    "date": {
+      "type": "date"
+    }
+  }
+}
