@@ -540,6 +540,40 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiInstagramInstagram extends Struct.SingleTypeSchema {
+  collectionName: 'instagrams';
+  info: {
+    displayName: 'Instagram';
+    pluralName: 'instagrams';
+    singularName: 'instagram';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.String & Schema.Attribute.Required;
+    followersCount: Schema.Attribute.Integer & Schema.Attribute.Required;
+    followingCount: Schema.Attribute.Integer & Schema.Attribute.Required;
+    link: Schema.Attribute.String & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::instagram.instagram'
+    > &
+      Schema.Attribute.Private;
+    logo: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    photos: Schema.Attribute.Media<'images', true> & Schema.Attribute.Required;
+    photosCount: Schema.Attribute.Integer & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiIssueIssue extends Struct.CollectionTypeSchema {
   collectionName: 'issues';
   info: {
@@ -664,6 +698,39 @@ export interface ApiStoryStory extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+  };
+}
+
+export interface ApiYoutubeYoutube extends Struct.SingleTypeSchema {
+  collectionName: 'youtubes';
+  info: {
+    displayName: 'Youtube';
+    pluralName: 'youtubes';
+    singularName: 'youtube';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    banner: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.String & Schema.Attribute.Required;
+    link: Schema.Attribute.String & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::youtube.youtube'
+    > &
+      Schema.Attribute.Private;
+    logo: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    subscribersCount: Schema.Attribute.Integer & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    videosCount: Schema.Attribute.Integer & Schema.Attribute.Required;
   };
 }
 
@@ -1181,10 +1248,12 @@ declare module '@strapi/strapi' {
       'api::about.about': ApiAboutAbout;
       'api::band.band': ApiBandBand;
       'api::global.global': ApiGlobalGlobal;
+      'api::instagram.instagram': ApiInstagramInstagram;
       'api::issue.issue': ApiIssueIssue;
       'api::live-video.live-video': ApiLiveVideoLiveVideo;
       'api::photos-collection.photos-collection': ApiPhotosCollectionPhotosCollection;
       'api::story.story': ApiStoryStory;
+      'api::youtube.youtube': ApiYoutubeYoutube;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
