@@ -1,0 +1,31 @@
+{
+  "kind": "singleType",
+  "collectionName": "top_tens",
+  "info": {
+    "singularName": "top-ten",
+    "pluralName": "top-tens",
+    "displayName": "Top Ten"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "header": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "albums": {
+      "type": "component",
+      "component": "shared.top-album",
+      "repeatable": true,
+      "required": true,
+      "min": 10,
+      "max": 10
+    }
+  }
+}

@@ -11,6 +11,18 @@ export interface SharedMedia extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedPhotoWithDescription extends Struct.ComponentSchema {
+  collectionName: 'components_shared_photo_with_descriptions';
+  info: {
+    displayName: 'Photo with description';
+    icon: 'picture';
+  };
+  attributes: {
+    description: Schema.Attribute.String & Schema.Attribute.Required;
+    photo: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+  };
+}
+
 export interface SharedQuote extends Struct.ComponentSchema {
   collectionName: 'components_shared_quotes';
   info: {
@@ -62,14 +74,52 @@ export interface SharedSlider extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedTopAlbum extends Struct.ComponentSchema {
+  collectionName: 'components_shared_top_albums';
+  info: {
+    displayName: 'Top album';
+    icon: 'music';
+  };
+  attributes: {
+    album: Schema.Attribute.String & Schema.Attribute.Required;
+    band: Schema.Attribute.String & Schema.Attribute.Required;
+    cover: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    position: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 10;
+          min: 1;
+        },
+        number
+      >;
+  };
+}
+
+export interface SharedVideoLink extends Struct.ComponentSchema {
+  collectionName: 'components_shared_video_links';
+  info: {
+    displayName: 'Video link';
+    icon: 'television';
+  };
+  attributes: {
+    title: Schema.Attribute.String;
+    url: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 declare module '@strapi/strapi' {
   export namespace Public {
     export interface ComponentSchemas {
       'shared.media': SharedMedia;
+      'shared.photo-with-description': SharedPhotoWithDescription;
       'shared.quote': SharedQuote;
       'shared.rich-text': SharedRichText;
       'shared.seo': SharedSeo;
       'shared.slider': SharedSlider;
+      'shared.top-album': SharedTopAlbum;
+      'shared.video-link': SharedVideoLink;
     }
   }
 }

@@ -20,7 +20,7 @@
       "type": "text",
       "required": true
     },
-    "fotos": {
+    "photos": {
       "type": "media",
       "multiple": true,
       "required": true,

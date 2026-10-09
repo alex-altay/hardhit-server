@@ -459,10 +459,10 @@ export interface ApiAboutAbout extends Struct.SingleTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     description: Schema.Attribute.Text & Schema.Attribute.Required;
-    fotos: Schema.Attribute.Media<'images', true> & Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::about.about'> &
       Schema.Attribute.Private;
+    photos: Schema.Attribute.Media<'images', true> & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
@@ -485,10 +485,9 @@ export interface ApiBandBand extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    live_videos: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::live-video.live-video'
-    >;
+    description: Schema.Attribute.Text;
+    interview_links: Schema.Attribute.Component<'shared.video-link', true>;
+    live_links: Schema.Attribute.Component<'shared.video-link', true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::band.band'> &
       Schema.Attribute.Private;
@@ -607,38 +606,6 @@ export interface ApiIssueIssue extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiLiveVideoLiveVideo extends Struct.CollectionTypeSchema {
-  collectionName: 'live_videos';
-  info: {
-    displayName: 'LiveVideo';
-    pluralName: 'live-videos';
-    singularName: 'live-video';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    band: Schema.Attribute.Relation<'manyToOne', 'api::band.band'> &
-      Schema.Attribute.Required;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    date: Schema.Attribute.Date;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::live-video.live-video'
-    > &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    title: Schema.Attribute.String & Schema.Attribute.Required;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    video: Schema.Attribute.Media<'videos'> & Schema.Attribute.Required;
-  };
-}
-
 export interface ApiPhotosCollectionPhotosCollection
   extends Struct.CollectionTypeSchema {
   collectionName: 'photos_collections';
@@ -672,6 +639,44 @@ export interface ApiPhotosCollectionPhotosCollection
   };
 }
 
+export interface ApiPhotosHeroPhotosHero extends Struct.SingleTypeSchema {
+  collectionName: 'photos_heroes';
+  info: {
+    displayName: 'Photos Hero';
+    pluralName: 'photos-heroes';
+    singularName: 'photos-hero';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    backgroundPhoto: Schema.Attribute.Media<'images'> &
+      Schema.Attribute.Required;
+    bands: Schema.Attribute.Component<'shared.photo-with-description', true> &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 5;
+          min: 5;
+        },
+        number
+      >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::photos-hero.photos-hero'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiStoryStory extends Struct.CollectionTypeSchema {
   collectionName: 'stories';
   info: {
@@ -695,6 +700,44 @@ export interface ApiStoryStory extends Struct.CollectionTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     text: Schema.Attribute.RichText;
     title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiTopTenTopTen extends Struct.SingleTypeSchema {
+  collectionName: 'top_tens';
+  info: {
+    displayName: 'Top Ten';
+    pluralName: 'top-tens';
+    singularName: 'top-ten';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    albums: Schema.Attribute.Component<'shared.top-album', true> &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 10;
+          min: 10;
+        },
+        number
+      >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    header: Schema.Attribute.String & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::top-ten.top-ten'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1250,9 +1293,10 @@ declare module '@strapi/strapi' {
       'api::global.global': ApiGlobalGlobal;
       'api::instagram.instagram': ApiInstagramInstagram;
       'api::issue.issue': ApiIssueIssue;
-      'api::live-video.live-video': ApiLiveVideoLiveVideo;
       'api::photos-collection.photos-collection': ApiPhotosCollectionPhotosCollection;
+      'api::photos-hero.photos-hero': ApiPhotosHeroPhotosHero;
       'api::story.story': ApiStoryStory;
+      'api::top-ten.top-ten': ApiTopTenTopTen;
       'api::youtube.youtube': ApiYoutubeYoutube;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

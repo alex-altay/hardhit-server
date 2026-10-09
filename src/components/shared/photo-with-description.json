@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_shared_photo_with_descriptions",
+  "info": {
+    "displayName": "Photo with description",
+    "icon": "picture"
+  },
+  "options": {},
+  "attributes": {
+    "photo": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "description": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "config": {}
+}

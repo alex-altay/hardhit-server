@@ -1,0 +1,31 @@
+{
+  "kind": "singleType",
+  "collectionName": "photos_heroes",
+  "info": {
+    "singularName": "photos-hero",
+    "pluralName": "photos-heroes",
+    "displayName": "Photos Hero"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "backgroundPhoto": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "bands": {
+      "type": "component",
+      "component": "shared.photo-with-description",
+      "repeatable": true,
+      "required": true,
+      "min": 5,
+      "max": 5
+    }
+  }
+}

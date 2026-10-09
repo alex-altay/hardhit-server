@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_shared_video_links",
+  "info": {
+    "displayName": "Video link",
+    "icon": "television"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string",
+      "required": true,
+      "regex": "^https?://"
+    }
+  },
+  "config": {}
+}
