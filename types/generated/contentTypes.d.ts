@@ -507,6 +507,42 @@ export interface ApiBandBand extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiDesignArticleDesignArticle
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'design_articles';
+  info: {
+    displayName: 'Design Article';
+    pluralName: 'design-articles';
+    singularName: 'design-article';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    cover: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    isHorizontalFeatured: Schema.Attribute.Boolean;
+    issue: Schema.Attribute.Relation<'manyToOne', 'api::issue.issue'>;
+    isVerticalFeatured: Schema.Attribute.Boolean;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::design-article.design-article'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    summary: Schema.Attribute.Text & Schema.Attribute.Required;
+    text: Schema.Attribute.RichText;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
   collectionName: 'globals';
   info: {
@@ -591,6 +627,10 @@ export interface ApiIssueIssue extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     date: Schema.Attribute.String;
     description: Schema.Attribute.RichText;
+    design_articles: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::design-article.design-article'
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::issue.issue'> &
       Schema.Attribute.Private;
@@ -1290,6 +1330,7 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::about.about': ApiAboutAbout;
       'api::band.band': ApiBandBand;
+      'api::design-article.design-article': ApiDesignArticleDesignArticle;
       'api::global.global': ApiGlobalGlobal;
       'api::instagram.instagram': ApiInstagramInstagram;
       'api::issue.issue': ApiIssueIssue;

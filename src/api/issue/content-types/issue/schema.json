@@ -52,6 +52,12 @@
       "relation": "oneToMany",
       "target": "api::story.story",
       "mappedBy": "issue"
+    },
+    "design_articles": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::design-article.design-article",
+      "mappedBy": "issue"
     }
   }
 }
