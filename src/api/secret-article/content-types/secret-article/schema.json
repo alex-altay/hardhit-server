@@ -1,0 +1,27 @@
+{
+  "kind": "singleType",
+  "collectionName": "secret_articles",
+  "info": {
+    "singularName": "secret-article",
+    "pluralName": "secret-articles",
+    "displayName": "Secret Article"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "lead": {
+      "type": "text",
+      "required": true
+    },
+    "text": {
+      "type": "richtext",
+      "required": true
+    }
+  }
+}

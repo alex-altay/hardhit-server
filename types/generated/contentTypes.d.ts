@@ -543,38 +543,6 @@ export interface ApiDesignArticleDesignArticle
   };
 }
 
-export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
-  collectionName: 'globals';
-  info: {
-    description: 'Define global settings';
-    displayName: 'Global';
-    pluralName: 'globals';
-    singularName: 'global';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    defaultSeo: Schema.Attribute.Component<'shared.seo', false>;
-    favicon: Schema.Attribute.Media<'images' | 'files' | 'videos'>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::global.global'
-    > &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    siteDescription: Schema.Attribute.Text & Schema.Attribute.Required;
-    siteName: Schema.Attribute.String & Schema.Attribute.Required;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface ApiInstagramInstagram extends Struct.SingleTypeSchema {
   collectionName: 'instagrams';
   info: {
@@ -711,6 +679,36 @@ export interface ApiPhotosHeroPhotosHero extends Struct.SingleTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiSecretArticleSecretArticle extends Struct.SingleTypeSchema {
+  collectionName: 'secret_articles';
+  info: {
+    displayName: 'Secret Article';
+    pluralName: 'secret-articles';
+    singularName: 'secret-article';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    lead: Schema.Attribute.Text & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::secret-article.secret-article'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    text: Schema.Attribute.RichText & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1331,11 +1329,11 @@ declare module '@strapi/strapi' {
       'api::about.about': ApiAboutAbout;
       'api::band.band': ApiBandBand;
       'api::design-article.design-article': ApiDesignArticleDesignArticle;
-      'api::global.global': ApiGlobalGlobal;
       'api::instagram.instagram': ApiInstagramInstagram;
       'api::issue.issue': ApiIssueIssue;
       'api::photos-collection.photos-collection': ApiPhotosCollectionPhotosCollection;
       'api::photos-hero.photos-hero': ApiPhotosHeroPhotosHero;
+      'api::secret-article.secret-article': ApiSecretArticleSecretArticle;
       'api::story.story': ApiStoryStory;
       'api::top-ten.top-ten': ApiTopTenTopTen;
       'api::youtube.youtube': ApiYoutubeYoutube;
