@@ -1,5 +1,16 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface SharedIssueHighlight extends Struct.ComponentSchema {
+  collectionName: 'components_shared_issue_highlights';
+  info: {
+    displayName: 'Issue Highlight';
+    icon: 'bulletList';
+  };
+  attributes: {
+    highlight: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface SharedMedia extends Struct.ComponentSchema {
   collectionName: 'components_shared_media';
   info: {
@@ -76,6 +87,7 @@ export interface SharedVideoLink extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export namespace Public {
     export interface ComponentSchemas {
+      'shared.issue-highlight': SharedIssueHighlight;
       'shared.media': SharedMedia;
       'shared.photo-with-description': SharedPhotoWithDescription;
       'shared.seo': SharedSeo;

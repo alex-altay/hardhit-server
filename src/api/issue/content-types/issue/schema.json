@@ -22,6 +22,12 @@
     "date": {
       "type": "string"
     },
+    "highlights": {
+      "type": "component",
+      "component": "shared.issue-highlight",
+      "repeatable": true,
+      "required": true
+    },
     "pdf": {
       "type": "media",
       "multiple": false,
@@ -43,9 +49,6 @@
         "videos",
         "audios"
       ]
-    },
-    "description": {
-      "type": "richtext"
     },
     "stories": {
       "type": "relation",

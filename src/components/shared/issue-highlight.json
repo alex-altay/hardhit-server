@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_shared_issue_highlights",
+  "info": {
+    "displayName": "Issue Highlight",
+    "icon": "bulletList"
+  },
+  "options": {},
+  "attributes": {
+    "highlight": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "config": {}
+}

@@ -594,11 +594,12 @@ export interface ApiIssueIssue extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     date: Schema.Attribute.String;
-    description: Schema.Attribute.RichText;
     design_articles: Schema.Attribute.Relation<
       'oneToMany',
       'api::design-article.design-article'
     >;
+    highlights: Schema.Attribute.Component<'shared.issue-highlight', true> &
+      Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::issue.issue'> &
       Schema.Attribute.Private;
