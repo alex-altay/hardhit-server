@@ -479,7 +479,7 @@ export interface ApiBandBand extends Struct.CollectionTypeSchema {
     singularName: 'band';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
@@ -585,7 +585,7 @@ export interface ApiIssueIssue extends Struct.CollectionTypeSchema {
     singularName: 'issue';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     cover: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
@@ -624,7 +624,7 @@ export interface ApiPhotosCollectionPhotosCollection
     singularName: 'photos-collection';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     band: Schema.Attribute.Relation<'manyToOne', 'api::band.band'> &
@@ -724,7 +724,7 @@ export interface ApiStoryStory extends Struct.CollectionTypeSchema {
     singularName: 'story';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     bands: Schema.Attribute.Relation<'manyToMany', 'api::band.band'> &
