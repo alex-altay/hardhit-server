@@ -726,7 +726,8 @@ export interface ApiStoryStory extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    bands: Schema.Attribute.Relation<'manyToMany', 'api::band.band'>;
+    bands: Schema.Attribute.Relation<'manyToMany', 'api::band.band'> &
+      Schema.Attribute.Required;
     cover: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

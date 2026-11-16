@@ -38,6 +38,7 @@
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::band.band",
+      "required": true,
       "inversedBy": "stories"
     }
   }
