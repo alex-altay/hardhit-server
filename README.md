@@ -16,11 +16,7 @@ npm install
 cp .env.example .env
 ```
 
-Replace every secret value in `.env` with a unique random string. For example, generate one with:
-
-```bash
-node -e "console.log(require('crypto').randomBytes(16).toString('base64'))"
-```
+Replace every secret value in `.env` with a unique random string
 
 `APP_KEYS` takes several comma-separated values.
 
@@ -41,10 +37,6 @@ Collection types:
 - **Band**: band page with description, stories, photo collections, live and interview links
 - **PhotosCollection**: concert photos of a band
 - **Design Article**: article about magazine design
-
-Single types:
-
-- **About**, **Instagram**, **Youtube**, **Top Ten**, **Photos Hero**, **Secret Article**
 
 Reusable components live in `src/components/shared` (SEO, media, photo with description, issue highlight, top album, video link).
 
@@ -72,7 +64,7 @@ Allowed file types are set in `config/plugins.ts`: images, video, audio, PDF and
 
 ## Deployment
 
-The server runs on Railway. Railway builds the admin panel and starts Strapi in production mode:
+The server runs on Railway. Railway builds the admin panel and starts Strapi in production mode. Add these in Railway settings:
 
 ```bash
 npm run build
