@@ -1,61 +1,88 @@
-# 🚀 Getting started with Strapi
+# Hard Hit Magazine — server
 
-Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
+Backend part of Hard Hit Magazine website: content management for magazine issues, live photos of metal bands, interviews and design articles.
 
-### `develop`
+Built with Strapi 5 and TypeScript. The website itself lives in the sibling repository `hardhit-strapi-client`.
 
-Start your Strapi application with autoReload enabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-develop)
+## Requirements
 
-```
-npm run develop
-# or
-yarn develop
-```
+- Node.js 20 or newer
+- PostgreSQL in production or in Docker for local development
 
-### `start`
+## Setup and local development
 
-Start your Strapi application with autoReload disabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-start)
-
-```
-npm run start
-# or
-yarn start
+```bash
+npm install
+cp .env.example .env
 ```
 
-### `build`
+Replace every secret value in `.env` with a unique random string. For example, generate one with:
 
-Build your admin panel. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-build)
-
+```bash
+node -e "console.log(require('crypto').randomBytes(16).toString('base64'))"
 ```
+
+`APP_KEYS` takes several comma-separated values.
+
+Start Strapi with autoreload, the admin panel opens on `http://localhost:1337/admin`:
+
+```bash
+npm run dev
+```
+
+On the first start Strapi asks you to create an admin user.
+
+## Content model
+
+Collection types:
+
+- **Issue**: magazine issue with cover, PDF, highlights, stories and design articles
+- **Story**: interview or report, belongs to an issue and to bands
+- **Band**: band page with description, stories, photo collections, live and interview links
+- **PhotosCollection**: concert photos of a band
+- **Design Article**: article about magazine design
+
+Single types:
+
+- **About**, **Instagram**, **Youtube**, **Top Ten**, **Photos Hero**, **Secret Article**
+
+Reusable components live in `src/components/shared` (SEO, media, photo with description, issue highlight, top album, video link).
+
+Draft & Publish is turned off for all content types: every saved entry is live immediately.
+
+## Types
+The reason to chose Stapi vs another contenders (Directus, Payload) was that Strapi keeps types in ts files instead of database.
+
+`types/generated` contains TypeScript types for all content types and components. Strapi regenerates them on every `npm run dev`, commit them together with schema changes.
+
+## API
+
+The REST API is configured in `config/api.ts`:
+
+- `strictParams` and `strictRelations` are on: unknown fields and filters in a query get a 400 error instead of being ignored
+- default page size is 25, maximum is 100
+
+The client reads content with an API token. Create it in **Settings → API Tokens** with read access only: `find` and `findOne` for the content types. The Public role should stay without permissions, so nothing is available without the token.
+
+## Uploads
+
+Media files are stored on the local disk in `public/uploads` (the default Strapi upload provider). In production this folder is mounted as a Railway persistent volume, otherwise files would be lost on every deploy.
+
+Allowed file types are set in `config/plugins.ts`: images, video, audio, PDF and office documents. SVG and executables are denied.
+
+## Deployment
+
+The server runs on Railway. Railway builds the admin panel and starts Strapi in production mode:
+
+```bash
 npm run build
-# or
-yarn build
+npm run start
 ```
 
-## ⚙️ Deployment
+Set all variables from `.env.example` on the service, with `DATABASE_CLIENT=postgres` and the connection settings for the database. The volume for uploads is mounted to `public/uploads`.
 
-Strapi gives you many possible deployment options for your project including [Strapi Cloud](https://cloud.strapi.io). Browse the [deployment section of the documentation](https://docs.strapi.io/dev-docs/deployment) to find the best solution for your use case.
+When a change touches the Strapi schema (a new field, a renamed component), deploy this server first and the client after it. Strapi rejects unknown fields in queries (`strictParams`), so a new client in front of an old Strapi gets 400 errors.
 
-```
-yarn strapi deploy
-```
+## Moving content from local machine to production
 
-## 📚 Learn more
-
-- [Resource center](https://strapi.io/resource-center) - Strapi resource center.
-- [Strapi documentation](https://docs.strapi.io) - Official Strapi documentation.
-- [Strapi tutorials](https://strapi.io/tutorials) - List of tutorials made by the core team and the community.
-- [Strapi blog](https://strapi.io/blog) - Official Strapi blog containing articles made by the Strapi team and the community.
-- [Changelog](https://strapi.io/changelog) - Find out about the Strapi product updates, new features and general improvements.
-
-Feel free to check out the [Strapi GitHub repository](https://github.com/strapi/strapi). Your feedback and contributions are welcome!
-
-## ✨ Community
-
-- [Discord](https://discord.strapi.io) - Come chat with the Strapi community including the core team.
-- [Forum](https://forum.strapi.io/) - Place to discuss, ask questions and find answers, show your Strapi project and get feedback or just talk with other Community members.
-- [Awesome Strapi](https://github.com/strapi/awesome-strapi) - A curated list of awesome things related to Strapi.
-
----
-
-<sub>🤫 Psst! [Strapi is hiring](https://strapi.io/careers).</sub>
+Content can be moved between instances (for example, local → production) with `npx strapi transfer`. It needs a transfer token created in **Settings → Transfer Tokens** on the destination instance (prod).
